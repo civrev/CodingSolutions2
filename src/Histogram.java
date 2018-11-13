@@ -16,28 +16,28 @@ public class Histogram {
      *
      * Class for parsing a text file into a histogram based on word
      * frequency, and then displaying the histogram as ASCII art
-     */
+     **/
 
     int longestKey = 0;
 
     private boolean sorted = false;
     private HistEntry[] sortedEntries;
 
-    public HashMap<String, Integer> entries = new HashMap<String, Integer>();;
+    public HashMap<String, Integer> entries = new HashMap<String, Integer>();
 
     //Constructors
     public Histogram(){}
     public Histogram(String filename) throws FileNotFoundException{
         /**
          * Creates a Histogram with a specified text file read in
-         */
+         **/
         readInput(filename);
     }
     
     public static void main(String[] args) throws IOException{
     	/**
     	 * For presentation purposes only
-    	 */
+    	 **/
 
         long lStartTime, lEndTime, output;
     	
@@ -87,7 +87,7 @@ public class Histogram {
          *
          * At this time a word is also checked to see if it the longest word
          * in the HashMap
-         */
+         **/
 
         sorted = false;
 
@@ -120,7 +120,7 @@ public class Histogram {
     public void writeHistogramToFile(String textFileName) throws IOException {
         /**
          * Efficiently writes the ASCII art representation of the histogram
-         */
+         **/
     	BufferedWriter writer = new BufferedWriter(new FileWriter(textFileName));
         for(HistEntry entry : getSortedEntries()) {
             writer.write(entry.toCharArray());
@@ -132,7 +132,7 @@ public class Histogram {
     public boolean validate(String word) {
         /**
          * Checks if the string is a word that should be included in the histogram
-         */
+         **/
         if (word.length() == 0)
             return false;
 
@@ -143,7 +143,7 @@ public class Histogram {
     public HistEntry[] getSortedEntries(){
         /**
          * Returns all the histogram entries sorted by frequency
-         */
+         **/
 
         if(sorted)
             return sortedEntries;
@@ -169,7 +169,7 @@ public class Histogram {
          * Has the short and fast toString method for object inspection,
          * and a longer method (toCharArray) to get the ASCII art representation
          * of the line in the histogram
-         */
+         **/
         String key;
         Integer value;
 
@@ -179,21 +179,24 @@ public class Histogram {
         }
 
         public char[] toCharArray() {
-            String output = String.format("%1$" + longestKey + "s", key);
-            output += " | ";
+            String prefix = String.format("%1$" + longestKey + "s", key) + " | ";
+            String suffix = " (" + value.toString() + ")";
             
-            char[] outputArray = new char[output.length() + value];
+            char[] outputArray = new char[prefix.length() + value + suffix.length()];
             Arrays.fill(outputArray, '=');
             
-            for(int i = 0; i < output.length(); i++)
-            	outputArray[i] = output.charAt(i);
+            for(int i = 0; i < prefix.length(); i++)
+            	outputArray[i] = prefix.charAt(i);
+
+            for(int i = suffix.length() - 1; i >= 0; i--)
+                outputArray[prefix.length() + value + i] = suffix.charAt(i);
             
             return outputArray;
         }
 
         @Override
         public String toString(){
-            return String.format("%1$" + longestKey + "s", key) + " | " + value.toString();
+            return String.format("%1$" + longestKey + "s", key) + " | (" + value.toString() + ")";
         }
 
         @Override
