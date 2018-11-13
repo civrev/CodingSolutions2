@@ -49,10 +49,10 @@ public class Histogram {
 		histogram = new Histogram("input.txt");
 		
 		//some random books as text files from gutenburg.org ~10k unique words
-		histogram = new Histogram("king_edward_vii.txt");
-		histogram = new Histogram("ben_franklin.txt");
-		histogram = new Histogram("kjv_bible.txt");
-		histogram = new Histogram("plato_republic.txt");
+		//histogram = new Histogram("king_edward_vii.txt");
+		//histogram = new Histogram("ben_franklin.txt");
+		//histogram = new Histogram("kjv_bible.txt");
+		//histogram = new Histogram("plato_republic.txt");
 
         lEndTime = System.nanoTime();
         output = lEndTime - lStartTime;
